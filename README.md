@@ -23,6 +23,17 @@ see inference.ipynb / terminal
 vi inference.py
 ``` 
 
+```
+import pickle
+
+def inference(inp):
+    loaded_model = pickle.load(open("model.pkl", 'rb'))
+    print(loaded_model.predict(context=None, model_input=[inp]))
+    
+if __name__ == '__main__':
+    inference([input()])
+
+
 5. create container manifest
 
 ```
@@ -36,8 +47,9 @@ FROM python:3.9-slim-buster
 WORKDIR /app
 
 # Copy MLflow artifact and inference script
-COPY /artifact /app
-COPY inference.py /app/
+COPY artifact/model.pkl /app
+COPY artifact/requirements.txt /app
+COPY inference.py /app
 
 # Install dependencies
 RUN pip install -r requirements.txt
@@ -74,7 +86,7 @@ docker push <registry_name>.azurecr.io/<image_name>:<tag>
 8. create deploy manifest / local terminal  azure portal etc.  
 
 ```
-vi dpl-manifest.json
+vi <dpl-manifest.json>
 ```
 
 either get it form Portal via IoT Hub, or - actually is the best. otherwise, too much manual adjustments. 
@@ -90,9 +102,9 @@ either get it form Portal via IoT Hub, or - actually is the best. otherwise, too
                     "settings": {
                         "registryCredentials": {
                             "docker": {
-                                "address": "tmpingredioncontainerregistry.azurecr.io",
-                                "password": "0d0HGgZluBtOIdczHgOiFFtVWrwqeCZ44V7MG52eMb+ACRA1DyVz",
-                                "username": "tmpingredioncontainerregistry"
+                                "address": "<registry-name>.azurecr.io",
+                                "password": "<some-azure-generated-pw>",
+                                "username": "<registry-name>"
                             }
                         }
                     }
@@ -121,7 +133,7 @@ either get it form Portal via IoT Hub, or - actually is the best. otherwise, too
                         "status": "running",
                         "restartPolicy": "always",
                         "settings": {
-                            "image": "tmpingredioncontainerregistry.azurecr.io/edge_container:latest",
+                            "image": "<regsitry-name>.azurecr.io/<container-name>:latest",
                             "createOptions": ""
                         }
                     }
