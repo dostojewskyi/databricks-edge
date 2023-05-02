@@ -165,3 +165,6 @@ az iot edge set-modules --device-id <device-name> --hub-name <hub-name> --conten
 # if edge has no edge runtime 
 see: https://learn.microsoft.com/de-de/azure/iot-edge/how-to-provision-single-device-linux-symmetric?view=iotedge-1.4&tabs=azure-portal%2Cubuntu 
 
+ALTERNATIVE: 
+if you dont want to build the container image via command line, one can use the AML & ADB enviornment classes: 
+see here: https://learn.microsoft.com/de-de/python/api/azureml-core/azureml.core.environment.environment?view=azure-ml-py
