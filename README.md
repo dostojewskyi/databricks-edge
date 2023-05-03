@@ -4,7 +4,7 @@ train on Azure Databricks, inference on IoT Edge
 # train on cloud, inference on edge
 
 1. create aml workspace - link /w ACR and Blob
-either Aportal, or CLI:
+either via Portal, or CLI:
 
 ```
 az ml workspace create -n <workspace-name> -g <resource-group-name> --container-registry <acr-name>
@@ -13,28 +13,24 @@ az ml workspace create -n <workspace-name> -g <resource-group-name> --container-
 2. connect databricks /w aml
 did this via portal 
  
-3. training in aml / databricks
-see training.ipynb
+3. dummy training Experiment I did: see ```training.ipynb``` in aml / databricks
+this pipeline 1. preprocesses data, 2. creates & runs experiemnt / trains model, and 3. saves/ registers model  
 
-4. create run.py
-see inference.ipynb / terminal 
+4. for edge-inference, we create a run.py file as entrypoint in our container on our edge devices.
+can be done either via workbook:
+
+```
+inference.ipynb
+```
+
+or terminal and vim:
 
 ```
 vi inference.py
 ``` 
 
-```
-import pickle
-
-def inference(inp):
-    loaded_model = pickle.load(open("model.pkl", 'rb'))
-    print(loaded_model.predict(context=None, model_input=[inp]))
-    
-if __name__ == '__main__':
-    inference([input()])
-
-
-5. create container manifest
+5. create container manifest 
+done via vim
 
 ```
 vi Dockerfile
@@ -42,6 +38,8 @@ vi Dockerfile
 
 ```
 FROM python:3.9-slim-buster
+
+LABEL maintainer="nikolai.arras@accenture.com"
 
 # Set working directory
 WORKDIR /app
@@ -55,35 +53,49 @@ COPY inference.py /app
 RUN pip install -r requirements.txt
 
 # Expose port for inference
-EXPOSE 8080
+EXPOSE 80
 
 # Start server
-CMD ["python", "inference.py"]
+ENTRYPOINT ["python", "inference.py"]
 ```
 
 6. get artifacts stored in dbfs to workspace local storage 
-manual, temrinal via ```cp```
+manual, temrinal via ```cp``` 
+we need the following files: 
+1. dockerfile (already in workspace local storage), 
+2. run.py (already in workspace local storage), 
+3. model.pkl (can be derived via temrinal from dbfs, but is also already a variable in workspace as ```wrappedModel``` variable [if variable is used, just make sure to convert it once as pkl hard coded to local workspace storage],
+4. requirements.txt (can be derived via temrinal from dbfs, but is also already a variable in workspace [if variable is used, just make sure to convert it once as txt hard coded to local workspace storage]
+5. conda_env (can be derived via temrinal from dbfs, but is also already a variable in workspace as ```conda_env``` variable [if variable is used, just make sure to convert it once as yaml hard coded to local workspace storage],
+
 
 7. do docker stuff to ACR
-terminal / %% in notebook, 
+either via (a) terminal or via (b) in notebook and azure ML core enviornment DockerSection class 
 
+1a
 ```
 docker build -t <image_name> .
 ```
 
+2a.
 ```
 az acr login --name <registry_name> --subscription <subscription_id>
 ```
 
+3a.
 ```
 docker tag <image_name> <registry_name>.azurecr.io/<image_name>:<tag>
 ```
 
+4a.
 ```
 docker push <registry_name>.azurecr.io/<image_name>:<tag>
 ```
 
+b. see: https://learn.microsoft.com/de-de/python/api/azureml-core/azureml.core.environment.dockersection?view=azure-ml-py
+
 8. create deploy manifest / local terminal  azure portal etc.  
+we create deployment manifest once.
 
 ```
 vi <dpl-manifest.json>
