@@ -1,0 +1,18 @@
+artifact_path: edge_model
+databricks_runtime: 12.2.x-photon-scala2.12
+flavors:
+  python_function:
+    cloudpickle_version: 2.2.1
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.pyfunc.model
+    python_model: python_model.pkl
+    python_version: 3.9.5
+mlflow_version: 2.3.1
+model_uuid: fe6fcc4f81e2491ab11ec09d57d962c3
+run_id: 6dd91e2162504b998f888f4819c138c5
+signature:
+  inputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1, 4]}}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1]}}]'
+utc_time_created: '2023-05-12 17:27:03.930580'
