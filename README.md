@@ -1,3 +1,70 @@
+# Introduction 
+train on Azure Databricks, inference on IoT Edge.
+A full infra & app documentation allowing to train ML models in Azure Databricks, based on Data from Aspen via Data Factory, producitve inference on edge. 
+
+# 1. Getting Started
+a.	Installation process
+variables:
+```
+datafactory=$TODO
+```
+```
+databricks=$DataBrickManufacturingHH
+```
+```
+devops=$Digital Factory Hamburg
+```
+```
+devops=$Digital Factory Hamburg
+```
+```
+pipelines=$Digital Factory Hamburg - $PIN
+```
+```
+registry=$ContainerRegManufacturingHH
+```
+```
+repository=$digitalfactoryhamburg - $PIN
+```
+```
+repository=$HHManufacturingIoTHub
+```
+```
+repository=$DEHAMSIOTEDGE
+```
+```
+module=$PIN
+```
+b.	Software dependencies
+```
+mlflow
+```
+```
+cloudpickle==2.2.1
+```
+```
+scikit-learn==1.0.2
+```
+TODO databricks dependencies 
+
+c. latest releases 
+TODO databricks push automation
+TODO devops pipeline build on target automation 
+TODO OPC module
+
+# Build and Test
+TODO: Describe and show how to build your code and run the tests. 
+
+# Contribute
+TODO: Explain how other users and developers can contribute to make your code better. 
+
+If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
+- [ASP.NET Core](https://github.com/aspnet/Home)
+- [Visual Studio Code](https://github.com/Microsoft/vscode)
+- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+
+
+
 # databricks-edge
 train on Azure Databricks, inference on IoT Edge
 
