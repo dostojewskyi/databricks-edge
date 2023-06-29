@@ -1,4 +1,4 @@
-<img width="442" alt="image" src="https://github.com/dostojewskyi/databricks-edge/assets/58233550/103607f8-5f6a-4175-b657-219897b5404c"># 1. Introduction 
+# 1. Introduction 
 train on Azure Databricks, inference on IoT Edge.
 A full infra & app documentation allowing to train ML models in Azure Databricks, based on Data from Aspen via Data Factory, producitve inference on edge. 
 
