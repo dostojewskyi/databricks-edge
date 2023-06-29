@@ -12,16 +12,19 @@ $datafactory=TODO
 $databricks=DataBrickManufacturingHH
 ```
 ```
-$devops=$Digital Factory Hamburg
+$devops=Digital Factory Hamburg
 ```
 ```
-$pipelines=Digital Factory Hamburg - $PIN
+$model=PIN
+```
+```
+$pipelines=Digital Factory Hamburg - $model
 ```
 ```
 $containerregistry=ContainerRegManufacturingHH
 ```
 ```
-$containerrepository=digitalfactoryhamburg - $PIN
+$containerrepository=digitalfactoryhamburg-$model
 ```
 ```
 $iothub=HHManufacturingIoTHub
@@ -61,6 +64,13 @@ TODO: create configure data factory
 Data factory ```$TODO``` gets data from data datbase ASPEN. preprocessing via ```$TODO```. 
 Model training and hyperparamether tuning via databricks ```$databricks``` notebook ```$notebook``` in Repo ```devops```, with support of MLflow.
 Run Model registration, loging and storage of artifacts with MLflow.
+Artifacts of Best run, inference method of Registered Model is stored on lovel ```/$model```
+TODO: put, delete, post on level ```/$model```push updates to Azure Devops Repository ```$devops``` 
+Updates on level ```/$model``` trigger build pipeline ```$pipelines```
+build pipeline ```$pipelines``` builds dockerimage from Dockerfile and model artifacts from ```/$model``` and pushes container to repository ```$containerrepository```in ACR ```ContainerRegManufacturingHH``` with tags: ```latest```and ```$buildid```
+
+
+
 
 # Contribute
 TODO: Explain how other users and developers can contribute to make your code better. 
