@@ -1,40 +1,42 @@
-# Introduction 
+# 1. Introduction 
 train on Azure Databricks, inference on IoT Edge.
 A full infra & app documentation allowing to train ML models in Azure Databricks, based on Data from Aspen via Data Factory, producitve inference on edge. 
 
-# 1. Getting Started
+# 2. Getting Started
 a.	Installation process
 variables:
 ```
-datafactory=$TODO
+$datafactory=TODO
 ```
 ```
-databricks=$DataBrickManufacturingHH
+$databricks=DataBrickManufacturingHH
 ```
 ```
-devops=$Digital Factory Hamburg
+$devops=$Digital Factory Hamburg
 ```
 ```
-devops=$Digital Factory Hamburg
+$pipelines=Digital Factory Hamburg - $PIN
 ```
 ```
-pipelines=$Digital Factory Hamburg - $PIN
+$containerregistry=ContainerRegManufacturingHH
 ```
 ```
-registry=$ContainerRegManufacturingHH
+$containerrepository=digitalfactoryhamburg - $PIN
 ```
 ```
-repository=$digitalfactoryhamburg - $PIN
+$iothub=HHManufacturingIoTHub
 ```
 ```
-repository=$HHManufacturingIoTHub
+$device=DEHAMSIOTEDGE
 ```
 ```
-repository=$DEHAMSIOTEDGE
+$module=PIN
 ```
 ```
-module=$PIN
+$notebook=Visco_Rise_Cook_Time
 ```
+
+
 b.	Software dependencies
 ```
 mlflow
@@ -52,8 +54,13 @@ TODO databricks push automation
 TODO devops pipeline build on target automation 
 TODO OPC module
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+# 3. Train and Build
+TODO: create configure databricks 
+TODO: create configure data factory
+
+Data factory ```$TODO``` gets data from data datbase ASPEN. preprocessing via ```$TODO```. 
+Model training and hyperparamether tuning via databricks ```$databricks``` notebook ```$notebook``` in Repo ```devops```, with support of MLflow.
+Run Model registration, loging and storage of artifacts with MLflow.
 
 # Contribute
 TODO: Explain how other users and developers can contribute to make your code better. 
