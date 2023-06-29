@@ -2,6 +2,9 @@
 train on Azure Databricks, inference on IoT Edge.
 A full infra & app documentation allowing to train ML models in Azure Databricks, based on Data from Aspen via Data Factory, producitve inference on edge. 
 
+![Infrastructure diagram.]([https://content.codecademy.com/courses/learn-cpp/community-challenge/highfive.gif](https://github.com/dostojewskyi/databricks-edge/blob/main/databricks_to_edge.png))
+
+
 # 2. Getting Started
 a.	Installation process
 variables:
