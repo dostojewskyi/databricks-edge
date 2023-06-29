@@ -1,4 +1,4 @@
-# 1. Introduction 
+<img width="442" alt="image" src="https://github.com/dostojewskyi/databricks-edge/assets/58233550/103607f8-5f6a-4175-b657-219897b5404c"># 1. Introduction 
 train on Azure Databricks, inference on IoT Edge.
 A full infra & app documentation allowing to train ML models in Azure Databricks, based on Data from Aspen via Data Factory, producitve inference on edge. 
 
@@ -63,6 +63,52 @@ TODO OPC module
 TODO: create configure databricks 
 TODO: create configure data factory
 
+After follow along the “getting started” section, the following infrastructure is configured as follows:
+- Data Factory instance is configered as descripted 
+- Databricks instance is configered as descripted 
+- Databricks notebooks are configered as descripted 
+- DevOps instance and repository are configered as descripted 
+- Azure Container registry are configured as descripted 
+- Azure IoT Hub and Edge devices are configured as descripted
+
+set up ACR
+```
+az acr create --name $containerregistry --resource-group ManufacturingDataEU --sku Basic --admin-enabled true --tags [Creator[=$creator] environment[= DEV] Project[= CloudEdge]] --location europe-norh
+```
+
+set up IoT Húb
+```
+az iot hub create --name HHManufacturingIoTHub --resource-group ManufacturingDataEU --location west-europe --sku s1
+```
+
+create Edge Device
+```
+az iot hub device-identity create --device-id DEHAMSIOTEDGE --am shared_private_key --edge-enabled = true 
+```
+
+spin up VM as edge 
+```
+az vm create --name --resource-group datamanufacturingeu --authentication-type all --image Ubuntu2204 
+```
+
+on the edge VM! (ubuntu)
+- install IoTedge
+```
+wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb sudo dpkg -i packages-microsoft-prod.deb rm packages-microsoft-prod.deb
+```
+- Install container engine
+```
+sudo apt-get update; \ sudo apt-get install moby-engine
+```
+- Install IoTedge runtime
+```
+sudo apt-get update; \ sudo apt-get install aziot-edge
+```
+- Provising device /w Cloud identity
+```
+sudo iotedge config mp --connection-string 'PASTE_DEVICE_CONNECTION_STRING_HERE’
+```
+
 # 3. Train and Build
 
 1. 
@@ -88,17 +134,6 @@ build pipeline ```$pipelines``` builds dockerimage from Dockerfile and model art
 
 8.
 ```$containerrepository```in ACR ```ContainerRegManufacturingHH``` with tags: ```latest```and ```$buildid```
-
-
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
-
-
 
 # databricks-edge
 train on Azure Databricks, inference on IoT Edge
@@ -273,12 +308,3 @@ important: edge device must be installed edge runtime (see A,B,C...)
 ```
 az iot edge set-modules --device-id <device-name> --hub-name <hub-name> --content <dpl-manifest.json>
 ```
-
-... abfahrt 
-
-# if edge has no edge runtime 
-see: https://learn.microsoft.com/de-de/azure/iot-edge/how-to-provision-single-device-linux-symmetric?view=iotedge-1.4&tabs=azure-portal%2Cubuntu 
-
-ALTERNATIVE: 
-if you dont want to build the container image via command line, one can use the AML & ADB enviornment classes: 
-see here: https://learn.microsoft.com/de-de/python/api/azureml-core/azureml.core.environment.environment?view=azure-ml-py
