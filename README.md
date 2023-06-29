@@ -12,6 +12,9 @@ $datafactory=TODO
 $databricks=DataBrickManufacturingHH
 ```
 ```
+$notebook=Visco_Rise_Cook_Time
+```
+```
 $devops=Digital Factory Hamburg
 ```
 ```
@@ -35,9 +38,6 @@ $device=DEHAMSIOTEDGE
 ```
 $module=PIN
 ```
-```
-$notebook=Visco_Rise_Cook_Time
-```
 
 
 b.	Software dependencies
@@ -57,19 +57,34 @@ TODO databricks push automation
 TODO devops pipeline build on target automation 
 TODO OPC module
 
-# 3. Train and Build
 TODO: create configure databricks 
 TODO: create configure data factory
 
-Data factory ```$TODO``` gets data from data datbase ASPEN. preprocessing via ```$TODO```. 
+# 3. Train and Build
+
+1. 
+Data factory ```$TODO``` gets data from data datbase ASPEN. preprocessing via ```$TODO```.
+
+2. 
 Model training and hyperparamether tuning via databricks ```$databricks``` notebook ```$notebook``` in Repo ```devops```, with support of MLflow.
+
+3.
 Run Model registration, loging and storage of artifacts with MLflow.
+
+4.
 Artifacts of Best run, inference method of Registered Model is stored on lovel ```/$model```
+
+5.
 TODO: put, delete, post on level ```/$model```push updates to Azure Devops Repository ```$devops``` 
+
+6.
 Updates on level ```/$model``` trigger build pipeline ```$pipelines```
-build pipeline ```$pipelines``` builds dockerimage from Dockerfile and model artifacts from ```/$model``` and pushes container to repository ```$containerrepository```in ACR ```ContainerRegManufacturingHH``` with tags: ```latest```and ```$buildid```
 
+7.
+build pipeline ```$pipelines``` builds dockerimage from Dockerfile and model artifacts from ```/$model``` and pushes container to repository
 
+8.
+```$containerrepository```in ACR ```ContainerRegManufacturingHH``` with tags: ```latest```and ```$buildid```
 
 
 # Contribute
